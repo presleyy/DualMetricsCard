@@ -21,3 +21,7 @@ pbiviz start
 ```
 pbiviz package
 ```
+
+### History Packages
+
+[1.0.17](./bin/1.0.17/dualMetricsCard.pbiviz)
