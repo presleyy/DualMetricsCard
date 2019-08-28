@@ -7,7 +7,7 @@
     "version": "1.0.17",
     "description": "Display two metrics in one card with the capability of adding additional prefix and suffix text.",
     "supportUrl": "https://community.powerbi.com",
-    "gitHubUrl": "https://github.com/Microsoft/PowerBI-visuals-RadarChart"
+    "gitHubUrl": "https://github.com/presleyy/DualMetricsCard"
   },
   "apiVersion": "1.13.0",
   "author": {
