@@ -11,6 +11,18 @@
             "displayNameKey": "Metrics_Two",
             "name": "MTwo",
             "kind": "Measure"
+        },
+        {
+            "displayName": "Color Metrics One",
+            "displayNameKey": "Color_Metrics_One",
+            "name": "COne",
+            "kind": "Measure"
+        },
+        {
+            "displayName": "Color Metrics Two ",
+            "displayNameKey": "Color_Metrics_Two",
+            "name": "CTwo",
+            "kind": "Measure"
         }
     ],
     "dataViewMappings": [
@@ -18,7 +30,9 @@
             "conditions": [
                 {
                     "MOne": { "max": 1 },
-                    "MTwo": { "max": 1 }
+                    "MTwo": { "max": 1 },
+                    "COne": { "max": 1 },
+                    "CTwo": { "max": 1 }
                 }
             ],
             "table": {
@@ -33,6 +47,16 @@
                             "bind": {
                                 "to": "MTwo"
                             }
+                        },
+                        {
+                            "bind": {
+                                "to": "COne"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "CTwo"
+                            }
                         }
                     ]
                 }
@@ -40,6 +64,29 @@
         }
     ],
     "objects": {
+        "Layout":{
+            "displayName": "Layout",
+            "properties":{
+                "vertical": {
+                    "displayName": "Vertical",
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "widthOne": {
+                    "displayName": "Metrics One Width %",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "widthTwo": {
+                    "displayName": "Metrics Two Width %",
+                    "type": {
+                        "numeric": true
+                    }
+                }
+            }
+        },
         "MOneStyle":{
             "displayName": "Metrics One",
             "properties":{
@@ -95,6 +142,12 @@
                     "displayName": "Suffix Text",
                     "type": {
                         "text": true
+                    }
+                },
+                "kmformat":{
+                    "displayName": "Use K M Format",
+                    "type": {
+                        "bool": true
                     }
                 }
             }
@@ -154,6 +207,12 @@
                     "displayName": "Suffix Text",
                     "type": {
                         "text": true
+                    }
+                },
+                "kmformat":{
+                    "displayName": "Use K M Format",
+                    "type": {
+                        "bool": true
                     }
                 }
             }

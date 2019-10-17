@@ -70,6 +70,7 @@ module powerbi.extensibility.visual {
     export class VisualSettings extends DataViewObjectsParser {
       public dataPoint: dataPointSettings = new dataPointSettings();
       public image: imageSetting = new imageSetting();
+      public Layout: LayoutSetting = new LayoutSetting();
       public MOneStyle: MOneStyleSetting = new MOneStyleSetting();
       public MTwoStyle: MTwoStyleSetting = new MTwoStyleSetting();
     }
@@ -91,6 +92,12 @@ module powerbi.extensibility.visual {
       public height: number = 200;
      }
 
+     export class LayoutSetting {
+         public vertical: boolean = true;
+         public widthOne: number = 50;
+         public widthTwo: number = 50;
+     }
+
      export class MOneStyleSetting {
       public fontSize: number = 20;
       public foreColor: FillColor = new FillColor();
@@ -98,6 +105,7 @@ module powerbi.extensibility.visual {
       public prefix: string = "";
       public suffix: string = "";
       public plus: boolean = false;
+      public kmformat: boolean = false;
      }
 
      export class MTwoStyleSetting {
@@ -107,6 +115,7 @@ module powerbi.extensibility.visual {
       public prefix: string = "";
       public suffix: string = "";
       public plus: boolean = false;
+      public kmformat: boolean = false;
      }
 
      export class FillColor{

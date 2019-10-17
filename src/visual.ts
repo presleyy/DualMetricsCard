@@ -124,6 +124,19 @@ module powerbi.extensibility.visual {
 
             this.settings = VisualSettings.parse<VisualSettings>(dataView);
 
+            if(this.settings.Layout.vertical === true){
+                this.moneBox.style.display = "block";
+                this.moneBox.style.width = "100%";
+                this.mtwoBox.style.display = "block";
+                this.mtwoBox.style.width = "100%";
+            }
+            else{
+                this.moneBox.style.display = "inline-block";
+                this.moneBox.style.width = this.settings.Layout.widthOne.toString()+"%";
+                this.mtwoBox.style.display = "inline-block";
+                this.mtwoBox.style.width = this.settings.Layout.widthTwo.toString()+"%";
+            }
+
             this.moneBox.style.fontSize = this.settings.MOneStyle.fontSize.toString() + "pt";
             this.moneBox.style.color = this.settings.MOneStyle.foreColor.solid.color;
             this.moneBox.style.textAlign = this.settings.MOneStyle.alignment;
@@ -140,36 +153,100 @@ module powerbi.extensibility.visual {
             this.mtwoBoxText.innerText = "";
             this.mtwoBoxSuffix.innerText = "";
 
+            let hasMOne: boolean = false;
+            let hasMTwo: boolean = false;
             dataView.table.columns.forEach((column: DataViewMetadataColumn, index: number) => {
                 if (column.roles["MOne"]) {
-                    let formatter = valueFormatter.create({
-                        format: valueFormatter.getFormatStringByColumn(column, true),
-                    });
-                    let plusText = "";
-                    if(this.settings.MOneStyle.plus && Number(dataView.table.rows[0][index])){
-                        if(Number(dataView.table.rows[0][index]) > 0){
-                            plusText = "+";
+                    if (dataView.table.rows[0][index] != null) {
+                        hasMOne = true;
+
+                        let formatter = valueFormatter.create({
+                            format: valueFormatter.getFormatStringByColumn(column, true),
+                        });
+                        if(this.settings.MOneStyle.kmformat){
+                            if(dataView.table.rows[0][index] > 1000000){
+                                formatter = valueFormatter.create({
+                                    format: "#,##,,.00M"
+                                });
+                            }
+                            else if(dataView.table.rows[0][index] > 1000){
+                                formatter = valueFormatter.create({
+                                    format: "#,.00K"
+                                });
+                            }
                         }
+                        
+                        let plusText = "";
+                        if (this.settings.MOneStyle.plus && Number(dataView.table.rows[0][index])) {
+                            if (Number(dataView.table.rows[0][index]) > 0) {
+                                plusText = "+";
+                            }
+                        }
+                        this.moneBoxPrefix.innerText = this.settings.MOneStyle.prefix;
+                        this.moneBoxText.innerText = plusText + formatter.format(dataView.table.rows[0][index])
+                        this.moneBoxSuffix.innerText = this.settings.MOneStyle.suffix;
                     }
-                    this.moneBoxPrefix.innerText = this.settings.MOneStyle.prefix;
-                    this.moneBoxText.innerText = plusText + formatter.format(dataView.table.rows[0][index])
-                    this.moneBoxSuffix.innerText = this.settings.MOneStyle.suffix;
                 }
-                if (column.roles["MTwo"] && dataView.table.rows[0][index]!=null) {
+                if (column.roles["MTwo"]) {
+                    if(dataView.table.rows[0][index]!=null){
+                        hasMTwo = true;
+
+                        let formatter = valueFormatter.create({
+                            format: valueFormatter.getFormatStringByColumn(column, true),
+                        });
+                        if(this.settings.MTwoStyle.kmformat){
+                            if(dataView.table.rows[0][index] > 1000000){
+                                formatter = valueFormatter.create({
+                                    format: "#,##,,.00M"
+                                });
+                            }
+                            else if(dataView.table.rows[0][index] > 1000){
+                                formatter = valueFormatter.create({
+                                    format: "#,.00K"
+                                });
+                            }
+                        }
+
+                        let plusText = "";
+                        if(this.settings.MTwoStyle.plus && Number(dataView.table.rows[0][index])){
+                            if(Number(dataView.table.rows[0][index]) > 0){
+                                plusText = "+";
+                            }
+                        }
+                        this.mtwoBoxPrefix.innerText = this.settings.MTwoStyle.prefix;
+                        this.mtwoBoxText.innerText = plusText + formatter.format(dataView.table.rows[0][index]);
+                        this.mtwoBoxSuffix.innerText = this.settings.MTwoStyle.suffix;
+                    }
+                }
+                if (column.roles["COne"]) {
                     let formatter = valueFormatter.create({
                         format: valueFormatter.getFormatStringByColumn(column, true),
                     });
-                    let plusText = "";
-                    if(this.settings.MTwoStyle.plus && Number(dataView.table.rows[0][index])){
-                        if(Number(dataView.table.rows[0][index]) > 0){
-                            plusText = "+";
-                        }
-                    }
-                    this.mtwoBoxPrefix.innerText = this.settings.MTwoStyle.prefix;
-                    this.mtwoBoxText.innerText = plusText + formatter.format(dataView.table.rows[0][index]);
-                    this.mtwoBoxSuffix.innerText = this.settings.MTwoStyle.suffix;
+                    this.moneBoxPrefix.style.color = formatter.format(dataView.table.rows[0][index]);
+                    this.moneBoxText.style.color = formatter.format(dataView.table.rows[0][index]);
+                    this.moneBoxSuffix.style.color = formatter.format(dataView.table.rows[0][index]);
+                }
+                if (column.roles["CTwo"]) {
+                    let formatter = valueFormatter.create({
+                        format: valueFormatter.getFormatStringByColumn(column, true),
+                    });
+                    this.mtwoBoxPrefix.style.color = formatter.format(dataView.table.rows[0][index]);
+                    this.mtwoBoxText.style.color = formatter.format(dataView.table.rows[0][index]);
+                    this.mtwoBoxSuffix.style.color = formatter.format(dataView.table.rows[0][index]);
                 }
             });
+            if (hasMOne && !hasMTwo) {
+                this.moneBox.style.display = "block";
+                this.moneBox.style.width = "100%";
+                this.moneBox.style.textAlign = "center";
+                this.mtwoBox.style.display = "none";
+            }
+            else if (!hasMOne && hasMTwo) {
+                this.moneBox.style.display = "none";
+                this.mtwoBox.style.display = "block";
+                this.mtwoBox.style.width = "100%";
+                this.mtwoBox.style.textAlign = "center";
+            }
         }
 
         private static parseSettings(dataView: DataView): VisualSettings {
