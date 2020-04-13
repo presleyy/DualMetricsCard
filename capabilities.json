@@ -84,6 +84,18 @@
                     "type": {
                         "numeric": true
                     }
+                },
+                "showplaceholder": {
+                    "displayName": "Show Placeholder When Metric One is Empty",
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "placeholder":{
+                    "displayName": "Placeholder Text",
+                    "type": {
+                        "text": true
+                    }
                 }
             }
         },

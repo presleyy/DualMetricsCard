@@ -241,11 +241,20 @@ module powerbi.extensibility.visual {
                 this.moneBox.style.textAlign = "center";
                 this.mtwoBox.style.display = "none";
             }
-            else if (!hasMOne && hasMTwo) {
-                this.moneBox.style.display = "none";
-                this.mtwoBox.style.display = "block";
-                this.mtwoBox.style.width = "100%";
-                this.mtwoBox.style.textAlign = "center";
+            else if (!hasMOne) {
+                if(this.settings.Layout.showplaceholder){
+                    this.moneBox.style.display = "block";
+                    this.moneBox.style.width = "100%";
+                    this.moneBox.style.textAlign = "center";
+                    this.moneBoxText.innerText = this.settings.Layout.placeholder;
+                    this.mtwoBox.style.display = "none";
+                }
+                else if (hasMTwo) {
+                    this.moneBox.style.display = "none";
+                    this.mtwoBox.style.display = "block";
+                    this.mtwoBox.style.width = "100%";
+                    this.mtwoBox.style.textAlign = "center";
+                }
             }
         }
 

@@ -96,6 +96,8 @@ module powerbi.extensibility.visual {
          public vertical: boolean = true;
          public widthOne: number = 50;
          public widthTwo: number = 50;
+         public showplaceholder: boolean = false;
+         public placeholder: string = "";
      }
 
      export class MOneStyleSetting {

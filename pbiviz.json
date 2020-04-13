@@ -4,7 +4,7 @@
     "displayName": "Dual Metrics Card",
     "guid": "dualMetricsCard4A74465D54AB4BD5B38F910B2585B035",
     "visualClassName": "Visual",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "description": "Display two metrics in one card with the capability of adding additional prefix and suffix text.",
     "supportUrl": "https://community.powerbi.com",
     "gitHubUrl": "https://github.com/presleyy/DualMetricsCard"
